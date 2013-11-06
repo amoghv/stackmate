@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.authors     = ["Chiradeep Vittal"]
   s.email       = 'chiradeepv@gmail.com'
   s.files = Dir[
-    'lib/**/*.rb', 'test/**/*.rb', 'bin/**',
+    'lib/**/*.rb', 'tests/**/*.rb', 'bin/**',
     '*.gemspec', '*.txt', '*.rdoc', '*.md'
   ]
   s.executables << 'stackmate'
@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
   s.platform = Gem::Platform::RUBY
 
   #s.add_runtime_dependency 'ruby_parser', '~> 2.3'
-  s.add_runtime_dependency 'cloudstack_ruby_client', '= 0.0.4'
+  #s.add_runtime_dependency 'cloudstack_ruby_client', '= 0.0.4'
   s.add_runtime_dependency 'json'
   s.add_runtime_dependency 'ruote', '>= 2.3.0'
   s.add_runtime_dependency 'sinatra', '~> 1.3.6'

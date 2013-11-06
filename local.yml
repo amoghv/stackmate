@@ -1,8 +1,8 @@
 ---
 service_offerings:
-  m1.small: 1c8db272-f95a-406c-bce3-39192ce965fa
+  m1.small: 1
 templates:
-  ami-1b814f72: 3ea4563e-c7eb-11e2-b0ed-7f3baba63e45
-zoneid: 88a1e565-bc2a-456b-be99-e95cacc3d069
+  ami-1b814f72: ecfb1510-3dca-11e3-af27-bb6ae22c368c
+zoneid: 7d2a08d8-3502-4621-96d8-12d4ae48f998
 
 
