@@ -19,6 +19,7 @@ module StackMate
           p args
           result_obj = make_async_request('assignToLoadBalancerRule',args)
           resource_obj = result_obj['ToLoadBalancerRule'.downcase]
+
           #doing it this way since it is easier to change later, rather than cloning whole object
           resource_obj.each_key do |k|
             val = resource_obj[k]
@@ -52,6 +53,7 @@ module StackMate
             if (!(result_obj['error'] == true))
               logger.info("Successfully deleted resource #{@name}")
             else
+              workitem[@name]['delete_error'] = true
               logger.info("CloudStack error while deleting resource #{@name}")
             end
           else

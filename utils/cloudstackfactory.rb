@@ -113,6 +113,7 @@ module StackMate
             if (!(result_obj['error'] == true))
               logger.info(\"Successfully deleted resource \#{@name}\")
             else
+              workitem[@name]['delete_error'] = true
               logger.info(\"CloudStack error while deleting resource \#{@name}\")
             end
           else
