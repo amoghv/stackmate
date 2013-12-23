@@ -31,6 +31,7 @@ module StackMate
             workitem[@name][k] = val
           end
           set_tags(@props['tags'],workitem[@name]['physical_id'],"Project") if @props.has_key?('tags')
+          set_metadata if workitem['Resources'][@name].has_key?('Metadata')
           workitem['ResolvedNames'][@name] = name_cs
           workitem['IdMap'][workitem[@name]['physical_id']] = @name
         

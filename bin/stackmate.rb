@@ -3,7 +3,7 @@ require 'ruote/storage/hash_storage'
 require 'optparse'
 require 'stackmate'
 require 'stackmate/classmap'
-require 'stackmate/waitcondition_server'
+require 'stackmate/stack_server'
 require 'stackmate/logging'
 
 
@@ -21,7 +21,7 @@ opt_parser = OptionParser.new do |opts|
     puts p
   end
   options[:wait_conditions] = true
-  opts.on("-n", "--no-wait-conditions", "Do not create any wait conditions") do
+  opts.on("-n", "--no-wait-conditions", "Do not create any wait conditions or metadata") do
     options[:wait_conditions] = false
   end
   options[:dry_run] = false
@@ -58,8 +58,11 @@ end
 if options[:file] && stack_name != ''
   if options[:wait_conditions]
     Thread.new do
-      StackMate::WaitConditionServer.run!
+      StackMate::StackServer.run!
     end
+    # Thread.new do
+    #   StackMate::MetadataServer.run!
+    # end
   end
   engine = Ruote::Dashboard.new(
     Ruote::Worker.new(

@@ -5,7 +5,7 @@ require 'yaml'
 require 'stackmate/logging'
 require 'stackmate/intrinsic_functions'
 require 'stackmate/resolver'
-
+require 'stackmate/metadata'
 
 module StackMate
 
@@ -33,6 +33,12 @@ module StackMate
     def on_workitem
       p workitem.participant_name
       reply
+    end
+
+    def set_metadata
+      resolved_metadata = recursive_resolve(workitem['Resources'][@name]['Metadata'],workitem)
+      stack_id = @resolved_names["CloudStack::StackId"]
+      Metadata.add_metadata(stack_id,@name,resolved_metadata)
     end
 
     protected

@@ -1,6 +1,11 @@
 $LOAD_PATH.unshift("#{File.dirname(__FILE__)}/../")
 require 'json'
+#require 'cloudstack_ruby_client'
 require 'yaml'
+require 'stackmate/logging'
+require 'stackmate/intrinsic_functions'
+require 'resolver'
+require 'ruote'
 
 module StackMate
 
@@ -82,12 +87,9 @@ module StackMate
             workitem[@name][k] = val
           end
           set_tags(@props['tags'],workitem[@name]['physical_id'],\"#{tag_name}\") if @props.has_key?('tags')
-          set_metadata if workitem['Resources'][@name].has_key?('Metadata')
           workitem['ResolvedNames'][@name] = name_cs
           workitem['IdMap'][workitem[@name]['physical_id']] = @name
         "
-      #set ip address for VMs
-      str = str + "workitem[@name][:PrivateIp] = resource_obj['nic'][0]['ipaddress']\n" if class_name.eql?("VirtualMachine")
       #raise error if some required field is missing
       str = str + "
         rescue NoMethodError => nme
@@ -114,7 +116,6 @@ module StackMate
             if (!(result_obj['error'] == true))
               logger.info(\"Successfully deleted resource \#{@name}\")
             else
-              workitem[@name]['delete_error'] = true
               logger.info(\"CloudStack error while deleting resource \#{@name}\")
             end
           else
@@ -164,7 +165,7 @@ module StackMate
       str = str + "  end
 end
     "
-      File.open("lib/stackmate/participants/cloudstack_" + class_name.downcase + ".rb" ,"w") { |file| file.write(str)}
+      File.open("/tmp/cloudstack_" + class_name.downcase + ".rb" ,"w") { |file| file.write(str)}
     end
 
     def self.meta_class(class_name,create_tag,required_fields,optional_fields,create_async,delete_tag,delete_id_tag,delete_async)
